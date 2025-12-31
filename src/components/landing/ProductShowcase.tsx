@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Activity, Share2, Shield, Settings, Bell, Search, Menu, TrendingUp } from 'lucide-react';
 import Section from '@/components/ui/Section';
+import Logo from '@/components/ui/Logo';
 import styles from './ProductShowcase.module.css';
 
 export default function ProductShowcase() {
@@ -22,7 +23,7 @@ export default function ProductShowcase() {
                         {/* Header */}
                         <header className={styles.dashHeader}>
                             <div className={styles.dashLogo}>
-                                <div className={styles.logoIcon}></div>
+                                <Logo size={20} />
                                 <span>Skua Terminal</span>
                             </div>
                             <div className={styles.dashSearch}>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import Button from '@/components/ui/Button';
+import Logo from '@/components/ui/Logo';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
@@ -33,7 +34,8 @@ export default function Navbar() {
     >
       <div className={`container ${styles.container}`}>
         <Link href="/" className={styles.logo}>
-          SKUA
+          <Logo size={28} />
+          <span>SKUA</span>
         </Link>
         <div className={styles.links}>
           <Link href="#features">Features</Link>

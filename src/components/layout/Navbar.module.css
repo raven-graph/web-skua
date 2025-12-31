@@ -23,11 +23,15 @@
 }
 
 .logo {
-    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-outfit), sans-serif;
     font-weight: 700;
     font-size: 1.5rem;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
+    text-decoration: none;
 }
 
 .links {
