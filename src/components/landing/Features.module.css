@@ -1,52 +1,116 @@
 .section {
-    padding: 100px 0;
     background: var(--bg-secondary);
 }
 
-.heading {
+.header {
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 16px;
+    max-width: 800px;
+    margin: 0 auto 64px;
+}
+
+.heading {
+    font-size: 3rem;
+    margin-bottom: 24px;
+    color: var(--text-primary);
 }
 
 .subheading {
-    text-align: center;
-    color: var(--text-secondary);
     font-size: 1.25rem;
-    margin-bottom: 64px;
+    color: var(--text-secondary);
+    line-height: 1.6;
 }
 
+.highlight {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.showcaseWrapper {
+    margin-bottom: 80px;
+}
+
+/* GRID */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    align-items: stretch;
 }
 
+/* CARDS */
 .card {
+    background: hsla(240, 10%, 6%, 0.6);
+    border: 1px solid hsla(0, 0%, 100%, 0.05);
+    border-radius: 24px;
     padding: 32px;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    border-color: var(--border-strong);
+    border-color: rgba(37, 99, 235, 0.3);
+    background: hsla(240, 10%, 8%, 0.8);
 }
 
-.icon {
-    font-size: 2rem;
+/* Make Asset Clusters span 2 columns if space allows */
+.cardLarge {
+    grid-column: span 1;
+}
+
+@media (min-width: 1024px) {
+    .cardLarge {
+        grid-column: span 2;
+    }
+}
+
+.cardContent {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.iconWrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: hsla(221, 83%, 53%, 0.1);
+    color: #60A5FA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 24px;
+    border: 1px solid hsla(221, 83%, 53%, 0.1);
 }
 
-.card h3 {
+.cardTitle {
     font-size: 1.25rem;
     margin-bottom: 12px;
     color: var(--text-primary);
 }
 
-.card p {
+.cardDesc {
     color: var(--text-secondary);
     line-height: 1.6;
+    font-size: 0.95rem;
+    flex-grow: 1;
+}
+
+.cardHover {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    color: var(--accent);
+}
+
+.card:hover .cardHover {
+    opacity: 1;
+    transform: translateX(0);
 }

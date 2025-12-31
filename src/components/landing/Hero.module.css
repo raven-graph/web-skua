@@ -1,11 +1,12 @@
 .hero {
     position: relative;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 700px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 64px;
     overflow: hidden;
+    padding-top: var(--header-height);
 }
 
 .canvas {
@@ -14,62 +15,156 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 0;
     opacity: 0.6;
+}
+
+.spotlight {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(37, 99, 235, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(80px);
 }
 
 .content {
     position: relative;
-    z-index: 2;
+    z-index: 10;
+    width: 100%;
+}
+
+.center {
+    width: 100%;
+    max-width: 900px;
+    /* Increased width for bigger title */
+    margin: 0 auto;
     text-align: center;
-    max-width: 800px;
+}
+
+.badge_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
 }
 
 .badge {
-    display: inline-block;
-    padding: 6px 12px;
-    background: rgba(59, 130, 246, 0.1);
-    color: var(--accent-primary);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    position: relative;
+    overflow: hidden;
+    background: hsla(221, 83%, 53%, 0.1);
+    color: #93C5FD;
+    border: 1px solid hsla(221, 83%, 53%, 0.3);
+    padding: 8px 20px;
     border-radius: 999px;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    margin-bottom: 24px;
+    letter-spacing: 0.03em;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 30px -5px rgba(37, 99, 235, 0.2);
+    transition: all 0.3s ease;
+}
+
+.badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    20% {
+        left: 100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 .title {
-    font-size: 3.5rem;
+    font-family: var(--font-outfit);
+    font-size: 5.5rem;
+    /* Bigger */
     line-height: 1.1;
-    margin-bottom: 24px;
-    background: linear-gradient(to bottom, #FFFFFF, #9CA3AF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    margin-bottom: 32px;
+    color: white;
+    letter-spacing: -0.03em;
+    font-weight: 700;
 }
 
-.accent {
-    -webkit-text-fill-color: var(--accent-primary);
-    color: var(--accent-primary);
+.highlight {
+    color: transparent;
+    background: linear-gradient(180deg, #FFFFFF 0%, #60A5FA 100%);
+    /* Stronger contrast */
+    -webkit-background-clip: text;
+    background-clip: text;
+    display: inline-block;
+    filter: drop-shadow(0 0 30px rgba(37, 99, 235, 0.5));
+    /* Glow effect */
 }
 
 .subtitle {
     font-size: 1.25rem;
-    color: var(--text-secondary);
-    margin-bottom: 40px;
     line-height: 1.6;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin: 0 auto 48px;
 }
 
 .actions {
     display: flex;
+    align-items: center;
     justify-content: center;
     gap: 16px;
+    margin-bottom: 48px;
+}
+
+.disclaimer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.fadeBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to top, var(--bg-primary), transparent);
+    pointer-events: none;
+    z-index: 5;
 }
 
 @media (max-width: 768px) {
     .title {
-        font-size: 2.5rem;
+        font-size: 3rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .actions>* {
+        width: 100%;
     }
 }

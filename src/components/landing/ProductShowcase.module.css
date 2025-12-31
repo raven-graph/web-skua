@@ -1,0 +1,511 @@
+/* CSS for ProductShowcase component (retained for import in Features) */
+.section {
+    position: relative;
+    overflow: hidden;
+    /* Removed padding-bottom since it's now inside Features */
+    perspective: 2000px;
+}
+
+.glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.perspectiveWrapper {
+    display: flex;
+    justify-content: center;
+    transform-style: preserve-3d;
+}
+
+/* ... keep dashboard styles same but remove .section constraints if needed ... */
+
+.dashboard {
+    width: 100%;
+    max-width: 1000px;
+    background: hsla(240, 10%, 6%, 0.8);
+    border: 1px solid hsla(0, 0%, 100%, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+        0 0 0 1px hsla(0, 0%, 100%, 0.05),
+        0 20px 60px -20px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+}
+
+/* Header */
+.dashHeader {
+    height: 50px;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.dashLogo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.logoIcon {
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+}
+
+.dashSearch {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.3);
+    height: 30px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    gap: 8px;
+    max-width: 300px;
+    border: 1px solid hsla(0, 0%, 100%, 0.05);
+}
+
+.dashControls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-secondary);
+}
+
+.avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #333, #555);
+}
+
+/* Body */
+.dashBody {
+    flex-grow: 1;
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 60px;
+    border-right: 1px solid hsla(0, 0%, 100%, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.navItem {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.navItem:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.navItem.active {
+    background: hsla(221, 83%, 53%, 0.1);
+    color: var(--accent);
+    border: 1px solid hsla(221, 83%, 53%, 0.2);
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+/* Main Area */
+.mainArea {
+    flex-grow: 1;
+    position: relative;
+    background: radial-gradient(circle at 50% 50%, hsla(221, 83%, 53%, 0.03) 0%, transparent 70%);
+}
+
+.graphControls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.badge {
+    background: hsla(142, 71%, 45%, 0.1);
+    color: #22c55e;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid hsla(142, 71%, 45%, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+.badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #22c55e;
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+.timeframe {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid hsla(0, 0%, 100%, 0.1);
+}
+
+.graphContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.connections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.node {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: hsla(240, 10%, 10%, 1);
+    border: 1px solid hsla(0, 0%, 100%, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.leader {
+    width: 50px;
+    height: 50px;
+    border-color: var(--accent);
+    background: hsla(221, 83%, 53%, 0.1);
+    color: white;
+}
+
+.nodeLabel {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    animation: ripple 2s infinite linear;
+}
+
+@keyframes ripple {
+    0% {
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+    }
+
+    100% {
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+    }
+}
+
+/* Right Panel */
+.rightPanel {
+    width: 250px;
+    border-left: 1px solid hsla(0, 0%, 100%, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.panelHeader {
+    padding: 15px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.05);
+}
+
+.feed {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.feedItem {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.feedIcon {
+    margin-top: 2px;
+    color: var(--accent);
+}
+
+.feedContent {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.feedTitle {
+    font-size: 0.8rem;
+    color: var(--text-primary);
+}
+
+.feedTime {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        height: 400px;
+    }
+
+    .rightPanel {
+        display: none;
+    }
+
+    .dashSearch {
+        display: none;
+    }
+}
+
+/* Controls */
+.controlItem {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid hsla(0, 0%, 100%, 0.1);
+    cursor: pointer;
+}
+
+.controlItem:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+/* Metrics Overlay */
+.metricsOverlay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 16px;
+    z-index: 5;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.metricLabel {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metricValue {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.nodeTag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 1px 4px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    color: #22c55e;
+}
+
+.leader .nodeTag {
+    top: -16px;
+    opacity: 1;
+}
+
+.node:hover .nodeTag {
+    opacity: 1;
+}
+
+/* Panel Details */
+.panelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panelBadge {
+    background: var(--accent);
+    color: white;
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.feedMeta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.feedTag {
+    font-size: 0.6rem;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+.feedTag.warning {
+    color: #eab308;
+    background: rgba(234, 179, 8, 0.1);
+}
+
+.feedTime {
+    font-size: 0.65rem;
+}
+
+.panelFooter {
+    margin-top: auto;
+    padding: 15px;
+    border-top: 1px solid hsla(0, 0%, 100%, 0.05);
+}
+
+.footerItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+}
+
+.footerLabel {
+    color: var(--text-secondary);
+}
+
+.footerValue {
+    font-weight: 600;
+}
+
+/* Advanced Animations */
+
+.signalToast {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: hsla(221, 83%, 53%, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsla(221, 83%, 53%, 0.3);
+    padding: 12px 20px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 40px -10px rgba(37, 99, 235, 0.4);
+    z-index: 20;
+    white-space: nowrap;
+}
+
+.signalToast span {
+    font-size: 0.85rem;
+    color: white;
+}
+
+.signalToast strong {
+    color: var(--accent);
+}
+
+.signalDot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #22c55e;
+    animation: pulse-green 1s infinite;
+}

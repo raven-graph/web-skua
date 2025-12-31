@@ -1,9 +1,7 @@
 .footer {
-    padding: 48px 0;
-    border-top: 1px solid var(--border-subtle);
+    padding: 64px 0;
+    border-top: 1px solid hsla(0, 0%, 100%, 0.05);
     background: var(--bg-primary);
-    color: var(--text-tertiary);
-    font-size: 0.875rem;
 }
 
 .container {
@@ -12,23 +10,49 @@
     align-items: center;
 }
 
+.brand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .logo {
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.tagline {
+    font-size: 0.875rem;
     color: var(--text-secondary);
 }
 
 .links {
     display: flex;
-    gap: 24px;
+    gap: 32px;
 }
 
-.links a:hover {
+.link {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.link:hover {
     color: var(--text-primary);
 }
 
-@media (max-width: 600px) {
+.copy {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+@media (max-width: 640px) {
     .container {
         flex-direction: column;
-        gap: 16px;
+        gap: 32px;
+        text-align: center;
     }
 }

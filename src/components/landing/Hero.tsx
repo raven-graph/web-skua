@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
+import { motion } from 'framer-motion';
+import Button from '@/components/ui/Button';
 import styles from './Hero.module.css';
 
 export default function Hero() {
@@ -13,78 +14,97 @@ export default function Hero() {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        let animationFrameId: number;
         let width = window.innerWidth;
         let height = window.innerHeight;
+        let particles: Particle[] = [];
+        let animationFrameId: number;
 
         const resize = () => {
             width = window.innerWidth;
             height = window.innerHeight;
             canvas.width = width;
             canvas.height = height;
+            initParticles();
         };
-        window.addEventListener('resize', resize);
-        resize();
 
-        // Nodes
-        const nodes: { x: number; y: number; vx: number; vy: number; radius: number; color: string }[] = [];
-        const nodeCount = 40;
+        class Particle {
+            x: number;
+            y: number;
+            vx: number;
+            vy: number;
+            size: number;
+            color: string;
 
-        for (let i = 0; i < nodeCount; i++) {
-            nodes.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                radius: Math.random() * 2 + 1,
-                color: i % 5 === 0 ? '#3B82F6' : '#6B7280' // Some blue, some gray
-            });
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.2;
+                this.vy = (Math.random() - 0.5) * 0.2;
+                this.size = Math.random() * 2 + 1;
+                // 10% chance to be blue, else grey
+                this.color = Math.random() > 0.9 ? '#2563EB' : 'rgba(255, 255, 255, 0.2)';
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                if (!ctx) return;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
         }
 
-        const draw = () => {
-            ctx.fillStyle = '#050507'; // Match bg-primary
-            ctx.fillRect(0, 0, width, height);
+        const initParticles = () => {
+            particles = [];
+            const count = Math.min(width < 768 ? 40 : 80, 100);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        };
 
-            // Updates
-            nodes.forEach(node => {
-                node.x += node.vx;
-                node.y += node.vy;
+        const animate = () => {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, width, height);
 
-                if (node.x < 0 || node.x > width) node.vx *= -1;
-                if (node.y < 0 || node.y > height) node.vy *= -1;
-            });
-
-            // Draw connections
+            // Draw connections first
             ctx.lineWidth = 0.5;
-            for (let i = 0; i < nodeCount; i++) {
-                for (let j = i + 1; j < nodeCount; j++) {
-                    const dx = nodes[i].x - nodes[j].x;
-                    const dy = nodes[i].y - nodes[j].y;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
                     if (dist < 150) {
                         ctx.beginPath();
                         const opacity = 1 - dist / 150;
-                        ctx.strokeStyle = `rgba(59, 130, 246, ${opacity * 0.3})`;
-                        ctx.moveTo(nodes[i].x, nodes[i].y);
-                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.05})`;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
                     }
                 }
             }
 
-            // Draw nodes
-            nodes.forEach(node => {
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-                ctx.fillStyle = node.color;
-                ctx.fill();
+            // Draw particles
+            particles.forEach(p => {
+                p.update();
+                p.draw();
             });
 
-            animationFrameId = requestAnimationFrame(draw);
+            animationFrameId = requestAnimationFrame(animate);
         };
 
-        draw();
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
 
         return () => {
             window.removeEventListener('resize', resize);
@@ -94,26 +114,45 @@ export default function Hero() {
 
     return (
         <section className={styles.hero}>
+            <div className={styles.spotlight} />
             <canvas ref={canvasRef} className={styles.canvas} />
+
             <div className={`container ${styles.content}`}>
-                <div className={styles.badge}>
-                    Coming Soon
-                </div>
-                <h1 className={styles.title}>
-                    See which assets are <span className={styles.accent}>pulling</span>, <span className={styles.accent}>following</span>, or <span className={styles.accent}>breaking away</span>.
-                </h1>
-                <p className={styles.subtitle}>
-                    Skua is a live map of market structure. Spot regime changes and influence shifts before they show up in single-asset charts.
-                </p>
-                <div className={styles.actions}>
-                    <Link href="#waitlist" className="btn btn-primary">
-                        Reference the Map
-                    </Link>
-                    <Link href="#features" className="btn btn-outline">
-                        How it works
-                    </Link>
-                </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className={styles.center}
+                >
+                    <div className={styles.badge_wrapper}>
+                        <div className={styles.badge}>Live Market Structure</div>
+                    </div>
+
+                    <h1 className={styles.title}>
+                        See who <span className={styles.highlight}>leads</span>.<br />
+                        See who <span className={styles.highlight}>follows</span>.
+                    </h1>
+
+                    <p className={styles.subtitle}>
+                        A live graph of the crypto market. Track directional influence and regime shifts in real-time, not just price action.
+                    </p>
+
+                    <div className={styles.actions}>
+                        <Button size="lg" href="#waitlist">
+                            Get Early Access
+                        </Button>
+                        <Button size="lg" variant="ghost" href="#features">
+                            Learn how it works
+                        </Button>
+                    </div>
+
+                    <div className={styles.disclaimer}>
+                        Not a trading bot. Not a signal feed. Pure structure.
+                    </div>
+                </motion.div>
             </div>
+
+            <div className={styles.fadeBottom} />
         </section>
     );
 }
