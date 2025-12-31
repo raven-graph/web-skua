@@ -331,15 +331,75 @@
 
 @media (max-width: 768px) {
     .dashboard {
-        height: 400px;
+        height: 380px;
     }
 
-    .rightPanel {
+    .rightPanel,
+    .sidebar,
+    .dashSearch,
+    .dashControls {
         display: none;
     }
 
-    .dashSearch {
+    .dashHeader {
+        padding: 0 15px;
+        justify-content: center;
+    }
+
+    .dashLogo {
+        margin: 0;
+    }
+
+    /* Hide extra controls on mobile to prevent overlap */
+    .controlItem {
         display: none;
+    }
+
+    .graphControls {
+        transform: scale(0.9);
+        transform-origin: top left;
+        left: 15px;
+        top: 15px;
+        /* Ensure it doesn't push too far right */
+        max-width: 50%;
+    }
+
+    .metricsOverlay {
+        transform: scale(0.9);
+        transform-origin: top right;
+        right: 15px;
+        top: 15px;
+        /* Stack vertically if needed, but keeping top-right usually works if controls are fewer */
+    }
+
+    .signalToast {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 320px;
+        white-space: normal;
+        text-align: center;
+        justify-content: center;
+        bottom: 20px;
+        padding: 10px 16px;
+    }
+
+    .video-container {
+        width: 100%;
+    }
+
+    .node {
+        width: 32px;
+        height: 32px;
+    }
+
+    .leader {
+        width: 40px;
+        height: 40px;
+    }
+
+    .nodeLabel {
+        font-size: 0.6rem;
     }
 }
 
@@ -477,8 +537,8 @@
 .signalToast {
     position: absolute;
     bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 20px;
+    transform: none;
     background: hsla(221, 83%, 53%, 0.1);
     backdrop-filter: blur(12px);
     border: 1px solid hsla(221, 83%, 53%, 0.3);
